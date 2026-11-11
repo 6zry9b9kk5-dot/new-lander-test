@@ -1,214 +1,323 @@
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#176b43">
-  <title>نموذج تقديم وظيفي</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09060d">
+<title></title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 24px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Tahoma, Arial, sans-serif;
-      color: #18231d;
-      background:
-        radial-gradient(circle at 15% 10%, #dceee2, transparent 40%),
-        linear-gradient(145deg, #f8fbf8, #edf5ef);
-    }
+body{
+ margin:0;
+ min-height:100vh;
+ min-height:100dvh;
+ padding:16px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:
+ radial-gradient(ellipse at 50% 0%,#51204e 0%,transparent 48%),
+ radial-gradient(ellipse at 100% 100%,#35102f 0%,transparent 45%),
+ #09060d;
+ font-family:Arial,sans-serif;
+}
 
-    .card {
-      width: 100%;
-      max-width: 430px;
-      padding: 28px 22px 22px;
-      background: #fff;
-      border: 1px solid #e0e9e2;
-      border-radius: 22px;
-      box-shadow: 0 18px 55px rgba(24, 60, 39, 0.10);
-    }
+.container{
+ width:100%;
+ max-width:430px;
+}
 
-    .brand-mark {
-      width: 54px;
-      height: 6px;
-      margin: 0 auto 18px;
-      border-radius: 99px;
-      background: #176b43;
-    }
+.preview{
+ width:100%;
+ aspect-ratio:1/1;
+ position:relative;
+ overflow:hidden;
+ border-radius:23px;
+ background:#160d19;
+ border:1px solid #75406e;
+ box-shadow:0 18px 55px #000b,0 0 35px #a42c7730;
+ cursor:pointer;
+}
 
-    h1 {
-      margin: 0;
-      text-align: center;
-      font-size: 27px;
-      line-height: 1.5;
-      color: #176b43;
-    }
+.preview img{
+ width:100%;
+ height:100%;
+ display:block;
+ object-fit:cover;
+ filter:blur(19px) brightness(.55) saturate(.8);
+ transform:scale(1.16);
+}
 
-    .subtitle {
-      margin: 8px 0 24px;
-      text-align: center;
-      color: #66736b;
-      font-size: 14px;
-      line-height: 1.8;
-    }
+.overlay{
+ position:absolute;
+ inset:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ pointer-events:none;
+}
 
-    .field {
-      margin-bottom: 17px;
-    }
+.play{
+ width:94px;
+ height:94px;
+ border-radius:50%;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ position:relative;
+ background:linear-gradient(135deg,#ec4ca0,#912b86);
+ border:3px solid #ffffff65;
+ box-shadow:0 0 35px #e63e9c99;
+}
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: bold;
-    }
+.triangle{
+ width:0;
+ height:0;
+ border-top:17px solid transparent;
+ border-bottom:17px solid transparent;
+ border-left:25px solid white;
+ margin-left:8px;
+}
 
-    input {
-      display: block;
-      width: 100%;
-      min-height: 50px;
-      padding: 13px 14px;
-      border: 1px solid #dce6df;
-      border-radius: 12px;
-      background: #fbfdfb;
-      color: #18231d;
-      font-family: inherit;
-      font-size: 16px;
-      outline: none;
-    }
+.countdown{
+ position:absolute;
+ inset:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:37px;
+ font-weight:800;
+ color:white;
+ text-shadow:0 2px 12px #000;
+}
 
-    input:focus {
-      border-color: #176b43;
-      box-shadow: 0 0 0 3px rgba(23, 107, 67, 0.10);
-    }
-
-    input::placeholder {
-      color: #9aa69e;
-    }
-
-    button {
-      width: 100%;
-      min-height: 52px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 13px;
-      background: #176b43;
-      color: #fff;
-      font-family: inherit;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 7px 16px rgba(23, 107, 67, 0.20);
-    }
-
-    button:hover {
-      background: #105333;
-    }
-
-    .notice {
-      margin: 17px 0 0;
-      padding-top: 14px;
-      border-top: 1px solid #edf1ee;
-      color: #66736b;
-      font-size: 12px;
-      line-height: 1.9;
-      text-align: center;
-    }
-  </style>
+.continue{
+ width:100%;
+ margin-top:20px;
+ padding:16px;
+ border:0;
+ border-radius:15px;
+ color:white;
+ font-size:18px;
+ font-weight:800;
+ background:linear-gradient(110deg,#9c287e,#e44991);
+ box-shadow:0 8px 25px #c22b8150;
+ cursor:pointer;
+ font-family:inherit;
+}
+</style>
 </head>
 
 <body>
-  <main class="card">
 
-    <div class="brand-mark"></div>
+<div class="container">
 
-    <h1>وظائف شركه المراعي </h1>
+ <div class="preview" id="preview">
 
-    <p class="subtitle">
-      املأ البيانات التالية للمتابعة
-    </p>
+  <img src="./IMG_6346.gif" alt="">
 
-    <form id="applicationForm">
+  <div class="overlay">
+   <div class="play">
+    <div class="triangle"></div>
+    <div class="countdown" id="countdown">3</div>
+   </div>
+  </div>
 
-      <div class="field">
-        <label for="fullName">الاسم الكامل</label>
-        <input
-          id="fullName"
-          name="name"
-          type="text"
-          autocomplete="name"
-          placeholder="اكتب اسمك الكامل"
-          maxlength="100"
-          required
-        >
-      </div>
+ </div>
 
-      <div class="field">
-        <label for="country">الدولة</label>
-        <input
-          id="country"
-          name="country"
-          type="text"
-          autocomplete="country-name"
-          placeholder="اكتب اسم الدولة"
-          maxlength="80"
-          required
-        >
-      </div>
+ <button class="continue" id="continueBtn">
+  Continue
+ </button>
 
-      <div class="field">
-        <label for="specialty">التخصص</label>
-        <input
-          id="specialty"
-          name="specialty"
-          type="text"
-          placeholder="اكتب التخصص أو الوظيفة المطلوبة"
-          maxlength="120"
-          required
-        >
-      </div>
+</div>
 
-      <button type="submit">
-        إرسال البيانات
-      </button>
+<script>
 
-    </form>
+/* ONELEAD SMARTLINK */
 
-    <p class="notice">
- 
-    
-      
-    </p>
+const smartLink =
+"https://onelead.odinllm.com/?utm_medium=f4971a16d63e6b3940dce3348a955147548b040f&utm_campaign=cr7";
 
-  </main>
 
-  <script>
-    const SMARTLINK =
-      "https://app.trcefy.com/sl?id=6a2050db46d3cf0d62f32aa4&pid=2&sub2=u833126&sub6=s2smartLink&sub5=s1SUBID1HERE";
+/* ALL LANGUAGE TRANSLATIONS */
 
-    document
-      .getElementById("applicationForm")
-      .addEventListener("submit", function (event) {
+const translations = {
 
-        event.preventDefault();
+ en:{
+  button:"Continue"
+ },
 
-        if (!this.reportValidity()) {
-          return;
-        }
+ sw:{
+  button:"Endelea"
+ },
 
-        // فتح رابط SmartLink بعد استكمال الخانات.
-        // لا تُرسل قيم الخانات إلى الرابط.
-        window.location.href = SMARTLINK;
-      });
-  </script>
+ pt:{
+  button:"Continuar"
+ },
+
+ fil:{
+  button:"Magpatuloy"
+ },
+
+ bn:{
+  button:"চালিয়ে যান"
+ },
+
+ id:{
+  button:"Lanjutkan"
+ },
+
+ ur:{
+  button:"جاری رکھیں"
+ },
+
+ ar:{
+  button:"متابعة"
+ }
+
+};
+
+
+/* ARABIC COUNTRIES */
+
+const arabicCountries=[
+ "EG","SA","AE","KW","QA","BH","OM","JO","IQ",
+ "LB","SY","YE","PS","DZ","MA","TN","LY","SD",
+ "MR","SO","DJ","KM"
+];
+
+
+/* COUNTRY TO LANGUAGE */
+
+function languageFor(country){
+
+ if(arabicCountries.includes(country))
+  return "ar";
+
+ if(country==="KE")
+  return "sw";
+
+ if(country==="MZ")
+  return "pt";
+
+ if(country==="PH")
+  return "fil";
+
+ if(country==="BD")
+  return "bn";
+
+ if(country==="ID")
+  return "id";
+
+ if(country==="PK")
+  return "ur";
+
+ return "en";
+}
+
+
+/* APPLY LANGUAGE */
+
+function applyLanguage(lang){
+
+ const t=translations[lang]||translations.en;
+
+ document.documentElement.lang=lang;
+
+ document.documentElement.dir=
+  (lang==="ar"||lang==="ur")?"rtl":"ltr";
+
+ document.getElementById("continueBtn").textContent=
+  t.button;
+
+}
+
+
+/* AUTOMATIC IP COUNTRY DETECTION */
+
+async function start(){
+
+ try{
+
+  const response=await fetch(
+   "https://ipapi.co/json/"
+  );
+
+  if(!response.ok)
+   throw new Error("IP lookup failed");
+
+  const data=await response.json();
+
+  const country=data.country_code||"";
+
+  const lang=languageFor(country);
+
+  applyLanguage(lang);
+
+ }catch(error){
+
+  applyLanguage("en");
+
+ }
+
+}
+
+
+/* SMARTLINK REDIRECT */
+
+function redirect(){
+
+ window.location.href=smartLink;
+
+}
+
+
+/* CLICK ON IMAGE */
+
+document.getElementById("preview")
+.addEventListener("click",redirect);
+
+
+/* CLICK ON CONTINUE */
+
+document.getElementById("continueBtn")
+.addEventListener("click",redirect);
+
+
+/* COUNTDOWN 3 - 2 - 1 */
+
+let seconds=3;
+
+const countdown=
+ document.getElementById("countdown");
+
+const timer=setInterval(()=>{
+
+ seconds--;
+
+ if(seconds<=0){
+
+  clearInterval(timer);
+
+  redirect();
+
+  return;
+
+ }
+
+ countdown.textContent=seconds;
+
+},1000);
+
+
+/* START LANGUAGE DETECTION */
+
+start();
+
+</script>
 
 </body>
 </html>
