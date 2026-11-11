@@ -135,7 +135,7 @@ body{
     <div class="triangle"></div>
    </div>
 
-   <div class="countdown" id="countdown">3</div>
+   <div class="countdown" id="countdown">5</div>
 
   </div>
 
@@ -283,40 +283,32 @@ function beginCountdown(){
 
  countdownStarted=true;
 
- /* EXTRA WAIT AFTER IMAGE LOAD */
+ let seconds=5;
 
- setTimeout(()=>{
+ countdown.textContent=seconds;
 
-  if(redirected) return;
+ const timer=setInterval(()=>{
 
-  let seconds=3;
+  if(redirected){
+   clearInterval(timer);
+   return;
+  }
+
+  seconds--;
+
+  if(seconds<=0){
+
+   clearInterval(timer);
+
+   redirect();
+
+   return;
+
+  }
 
   countdown.textContent=seconds;
 
-  const timer=setInterval(()=>{
-
-   if(redirected){
-    clearInterval(timer);
-    return;
-   }
-
-   seconds--;
-
-   if(seconds<=0){
-
-    clearInterval(timer);
-
-    redirect();
-
-    return;
-
-   }
-
-   countdown.textContent=seconds;
-
-  },1000);
-
- },5000);
+ },1000);
 
 }
 
@@ -346,6 +338,7 @@ start();
 
 </body>
 </html>
+
 
 
 
