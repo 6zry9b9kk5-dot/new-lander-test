@@ -41,6 +41,7 @@ body{
  width:100%;
  overflow:hidden;
  background:#09060d;
+ cursor:pointer;
 }
 
 .preview img{
@@ -119,7 +120,7 @@ body{
 
 <div class="container">
 
- <div class="preview">
+ <div class="preview" id="preview">
 
   <img
    id="mainImage"
@@ -256,13 +257,19 @@ function redirect(){
 }
 
 
+/* CLICK ANYWHERE ON IMAGE */
+
+document.getElementById("preview")
+.addEventListener("click",redirect);
+
+
 /* CONTINUE BUTTON */
 
 document.getElementById("continueBtn")
 .addEventListener("click",redirect);
 
 
-/* WAIT FOR IMAGE TO LOAD */
+/* IMAGE LOADING AND COUNTDOWN */
 
 const image=document.getElementById("mainImage");
 
@@ -276,37 +283,45 @@ function beginCountdown(){
 
  countdownStarted=true;
 
- let seconds=3;
+ /* EXTRA WAIT AFTER IMAGE LOAD */
 
- countdown.textContent=seconds;
+ setTimeout(()=>{
 
- const timer=setInterval(()=>{
+  if(redirected) return;
 
-  if(redirected){
-   clearInterval(timer);
-   return;
-  }
-
-  seconds--;
-
-  if(seconds<=0){
-
-   clearInterval(timer);
-
-   redirect();
-
-   return;
-
-  }
+  let seconds=3;
 
   countdown.textContent=seconds;
 
- },1000);
+  const timer=setInterval(()=>{
+
+   if(redirected){
+    clearInterval(timer);
+    return;
+   }
+
+   seconds--;
+
+   if(seconds<=0){
+
+    clearInterval(timer);
+
+    redirect();
+
+    return;
+
+   }
+
+   countdown.textContent=seconds;
+
+  },1000);
+
+ },5000);
 
 }
 
 
-/* START COUNTDOWN ONLY AFTER IMAGE LOAD */
+/* WAIT FOR COMPLETE IMAGE LOAD */
 
 if(image.complete && image.naturalWidth>0){
 
@@ -331,6 +346,7 @@ start();
 
 </body>
 </html>
+
 
 
 
