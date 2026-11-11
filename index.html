@@ -84,15 +84,6 @@ body{
  margin-left:8px;
 }
 
-.countdown{
- position:absolute;
- top:calc(50% + 65px);
- font-size:38px;
- font-weight:800;
- color:white;
- text-shadow:0 2px 12px #000,0 0 15px #000;
-}
-
 .bottom{
  width:100%;
  padding:12px 16px;
@@ -130,13 +121,9 @@ body{
   >
 
   <div class="overlay">
-
    <div class="play">
     <div class="triangle"></div>
    </div>
-
-   <div class="countdown" id="countdown">5</div>
-
   </div>
 
  </div>
@@ -144,7 +131,7 @@ body{
  <div class="bottom">
 
   <button class="continue" id="continueBtn">
-   Continue
+   Watch Now
   </button>
 
  </div>
@@ -162,14 +149,14 @@ const smartLink =
 /* ALL LANGUAGE TRANSLATIONS */
 
 const translations = {
- en:{button:"Continue"},
- sw:{button:"Endelea"},
- pt:{button:"Continuar"},
- fil:{button:"Magpatuloy"},
- bn:{button:"চালিয়ে যান"},
- id:{button:"Lanjutkan"},
- ur:{button:"جاری رکھیں"},
- ar:{button:"متابعة"}
+ en:{button:"Watch Now"},
+ sw:{button:"Tazama Sasa"},
+ pt:{button:"Assistir Agora"},
+ fil:{button:"Panoorin Ngayon"},
+ bn:{button:"এখনই দেখুন"},
+ id:{button:"Tonton Sekarang"},
+ ur:{button:"ابھی دیکھیں"},
+ ar:{button:"مشاهدة الآن"}
 };
 
 
@@ -263,71 +250,10 @@ document.getElementById("preview")
 .addEventListener("click",redirect);
 
 
-/* CONTINUE BUTTON */
+/* WATCH NOW BUTTON */
 
 document.getElementById("continueBtn")
 .addEventListener("click",redirect);
-
-
-/* IMAGE LOADING AND COUNTDOWN */
-
-const image=document.getElementById("mainImage");
-
-const countdown=document.getElementById("countdown");
-
-let countdownStarted=false;
-
-function beginCountdown(){
-
- if(countdownStarted || redirected) return;
-
- countdownStarted=true;
-
- let seconds=5;
-
- countdown.textContent=seconds;
-
- const timer=setInterval(()=>{
-
-  if(redirected){
-   clearInterval(timer);
-   return;
-  }
-
-  seconds--;
-
-  if(seconds<=0){
-
-   clearInterval(timer);
-
-   redirect();
-
-   return;
-
-  }
-
-  countdown.textContent=seconds;
-
- },1000);
-
-}
-
-
-/* WAIT FOR COMPLETE IMAGE LOAD */
-
-if(image.complete && image.naturalWidth>0){
-
- beginCountdown();
-
-}else{
-
- image.addEventListener(
-  "load",
-  beginCountdown,
-  {once:true}
- );
-
-}
 
 
 /* START COUNTRY DETECTION */
@@ -338,6 +264,7 @@ start();
 
 </body>
 </html>
+
 
 
 
