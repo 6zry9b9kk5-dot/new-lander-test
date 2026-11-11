@@ -23,15 +23,13 @@ body{
  min-height:100dvh;
  background:#09060d;
  font-family:Arial,sans-serif;
- display:flex;
- flex-direction:column;
  overflow:hidden;
 }
 
 .container{
  width:100%;
- min-height:100vh;
- min-height:100dvh;
+ height:100vh;
+ height:100dvh;
  display:flex;
  flex-direction:column;
 }
@@ -59,7 +57,6 @@ body{
  position:absolute;
  inset:0;
  display:flex;
- flex-direction:column;
  justify-content:center;
  align-items:center;
  pointer-events:none;
@@ -87,7 +84,8 @@ body{
 }
 
 .countdown{
- margin-top:15px;
+ position:absolute;
+ top:calc(50% + 65px);
  font-size:38px;
  font-weight:800;
  color:white;
@@ -96,7 +94,7 @@ body{
 
 .bottom{
  width:100%;
- padding:0 16px;
+ padding:12px 16px;
  padding-bottom:calc(14px + env(safe-area-inset-bottom));
  background:#09060d;
 }
@@ -114,10 +112,6 @@ body{
  cursor:pointer;
  font-family:inherit;
 }
-
-.continue:active{
- transform:scale(.98);
-}
 </style>
 </head>
 
@@ -128,8 +122,10 @@ body{
  <div class="preview">
 
   <img
+   id="mainImage"
    src="./921AD2C8-65A5-4010-BA02-8CB0C85E33E3.png"
    alt=""
+   fetchpriority="high"
   >
 
   <div class="overlay">
@@ -217,7 +213,7 @@ function applyLanguage(lang){
 }
 
 
-/* AUTOMATIC IP COUNTRY DETECTION */
+/* IP COUNTRY DETECTION */
 
 async function start(){
 
@@ -247,7 +243,13 @@ async function start(){
 
 /* SMARTLINK REDIRECT */
 
+let redirected=false;
+
 function redirect(){
+
+ if(redirected) return;
+
+ redirected=true;
 
  window.location.href=smartLink;
 
@@ -260,33 +262,68 @@ document.getElementById("continueBtn")
 .addEventListener("click",redirect);
 
 
-/* COUNTDOWN 3 - 2 - 1 */
+/* WAIT FOR IMAGE TO LOAD */
 
-let seconds=3;
+const image=document.getElementById("mainImage");
 
-const countdown=
- document.getElementById("countdown");
+const countdown=document.getElementById("countdown");
 
-const timer=setInterval(()=>{
+let countdownStarted=false;
 
- seconds--;
+function beginCountdown(){
 
- if(seconds<=0){
+ if(countdownStarted || redirected) return;
 
-  clearInterval(timer);
+ countdownStarted=true;
 
-  redirect();
-
-  return;
-
- }
+ let seconds=3;
 
  countdown.textContent=seconds;
 
-},1000);
+ const timer=setInterval(()=>{
+
+  if(redirected){
+   clearInterval(timer);
+   return;
+  }
+
+  seconds--;
+
+  if(seconds<=0){
+
+   clearInterval(timer);
+
+   redirect();
+
+   return;
+
+  }
+
+  countdown.textContent=seconds;
+
+ },1000);
+
+}
 
 
-/* START */
+/* START COUNTDOWN ONLY AFTER IMAGE LOAD */
+
+if(image.complete && image.naturalWidth>0){
+
+ beginCountdown();
+
+}else{
+
+ image.addEventListener(
+  "load",
+  beginCountdown,
+  {once:true}
+ );
+
+}
+
+
+/* START COUNTRY DETECTION */
 
 start();
 
@@ -294,5 +331,6 @@ start();
 
 </body>
 </html>
+
 
 
