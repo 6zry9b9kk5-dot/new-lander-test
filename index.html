@@ -47,8 +47,8 @@ body{
  height:100%;
  display:block;
  object-fit:cover;
- filter:blur(19px) brightness(.55) saturate(.8);
- transform:scale(1.16);
+ filter:blur(25px) brightness(.48) saturate(.65);
+ transform:scale(1.20);
 }
 
 .overlay{
@@ -117,7 +117,7 @@ body{
 
  <div class="preview" id="preview">
 
-  <img src="./IMG_6346.gif" alt="">
+  <img id="staticImage" alt="">
 
   <div class="overlay">
    <div class="play">
@@ -145,39 +145,14 @@ const smartLink =
 /* ALL LANGUAGE TRANSLATIONS */
 
 const translations = {
-
- en:{
-  button:"Continue"
- },
-
- sw:{
-  button:"Endelea"
- },
-
- pt:{
-  button:"Continuar"
- },
-
- fil:{
-  button:"Magpatuloy"
- },
-
- bn:{
-  button:"চালিয়ে যান"
- },
-
- id:{
-  button:"Lanjutkan"
- },
-
- ur:{
-  button:"جاری رکھیں"
- },
-
- ar:{
-  button:"متابعة"
- }
-
+ en:{button:"Continue"},
+ sw:{button:"Endelea"},
+ pt:{button:"Continuar"},
+ fil:{button:"Magpatuloy"},
+ bn:{button:"চালিয়ে যান"},
+ id:{button:"Lanjutkan"},
+ ur:{button:"جاری رکھیں"},
+ ar:{button:"متابعة"}
 };
 
 
@@ -194,26 +169,13 @@ const arabicCountries=[
 
 function languageFor(country){
 
- if(arabicCountries.includes(country))
-  return "ar";
-
- if(country==="KE")
-  return "sw";
-
- if(country==="MZ")
-  return "pt";
-
- if(country==="PH")
-  return "fil";
-
- if(country==="BD")
-  return "bn";
-
- if(country==="ID")
-  return "id";
-
- if(country==="PK")
-  return "ur";
+ if(arabicCountries.includes(country)) return "ar";
+ if(country==="KE") return "sw";
+ if(country==="MZ") return "pt";
+ if(country==="PH") return "fil";
+ if(country==="BD") return "bn";
+ if(country==="ID") return "id";
+ if(country==="PK") return "ur";
 
  return "en";
 }
@@ -232,7 +194,36 @@ function applyLanguage(lang){
 
  document.getElementById("continueBtn").textContent=
   t.button;
+}
 
+
+/* LOAD GIF AS A STATIC FIRST FRAME */
+
+function loadStaticImage(){
+
+ const gif=new Image();
+
+ gif.onload=function(){
+
+  const canvas=document.createElement("canvas");
+
+  canvas.width=gif.naturalWidth;
+  canvas.height=gif.naturalHeight;
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.drawImage(gif,0,0);
+
+  document.getElementById("staticImage").src=
+   canvas.toDataURL("image/png");
+
+ };
+
+ gif.onerror=function(){
+  console.error("Image could not be loaded");
+ };
+
+ gif.src="./IMG_6346.gif";
 }
 
 
@@ -253,9 +244,7 @@ async function start(){
 
   const country=data.country_code||"";
 
-  const lang=languageFor(country);
-
-  applyLanguage(lang);
+  applyLanguage(languageFor(country));
 
  }catch(error){
 
@@ -269,9 +258,7 @@ async function start(){
 /* SMARTLINK REDIRECT */
 
 function redirect(){
-
  window.location.href=smartLink;
-
 }
 
 
@@ -313,11 +300,13 @@ const timer=setInterval(()=>{
 },1000);
 
 
-/* START LANGUAGE DETECTION */
+/* START */
 
+loadStaticImage();
 start();
 
 </script>
 
 </body>
 </html>
+
